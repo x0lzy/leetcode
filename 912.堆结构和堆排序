@@ -1,0 +1,63 @@
+class Solution {
+  
+    public static int[] sortArray(int[] arr) {
+        if(arr.length>1){
+        StackSort(arr);
+        }
+    
+    return arr;
+    }
+    
+    public static void swap(int[]nums,int a, int b){
+        int temp=nums[a];
+        nums[a]=nums[b];
+        nums[b]=temp;
+    }
+     public static void HeapInsert(int[] arr, int i){
+         int l=(i-1)/2;
+         while(l>=0){
+             if(arr[i]<=arr[l])
+             {break;}
+                 swap(arr,i,l); 
+             i=l;
+             l=(i-1)/2;
+         }
+
+     }
+
+     public static void Heapify(int[] arr, int i,int n){
+
+     int l=i*2+1;
+         while(l<n){
+
+             int better=((l+1<n)&&(arr[l+1]>arr[l]))?l+1:l;//子树比较
+             int best=(arr[better]>arr[i])?better:i;//子树最大的节点和父节点进行比较
+             if(best==i){
+                break;
+                //跳出 循环，防止耗时太久
+             }
+              swap(arr,best,i);
+              i=best;
+              l=i*2+1;
+         }
+
+}
+
+
+  
+     public static void StackSort(int [] arr){
+int n=arr.length;
+for(int i=n-1;i>=0;i--){
+    Heapify(arr,i,n);
+   //HeapInsert(arr,i);不知道为什么不能运行
+}
+int size=n;
+while(size>1){//size>1代表不止有一个元素剩下
+    swap(arr,0,--size);//先--是因为size=n,数组会溢出
+    Heapify(arr,0,size);
+}
+     }
+
+
+    
+}
